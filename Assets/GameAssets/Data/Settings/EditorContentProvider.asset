@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 042a9d3ec13e60f4ba82d968991bb2f8, type: 3}
+  m_Name: EditorContentProvider
+  m_EditorClassIdentifier: 
+  CameraSensivitity: 1
+  SaveFolder: /GameContent/
+  blockFactoryData: {fileID: 11400000, guid: 0ac851e63c1b0204a9b73f3ad7ce509c, type: 2}
+  uiEditor: {fileID: 4366814584440998289, guid: 453b70c67f3bbcc44a3c483f7623effb, type: 3}
+  borderView: {fileID: -1556224911663579746, guid: e3b569b1b37d9c14eb9b0e7a13994d50, type: 3}
