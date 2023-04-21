@@ -6,17 +6,11 @@ namespace MapEditor
     //корневой класс UI редактора. Сюда писать какие-либо глобальные вещи.
     public class UiEditor : MonoBehaviour
     {
-        [SerializeField] private MainPanelView mainPanel;
-
-        [Inject]
-        public void Init(MainPanelModel panelModel)
-        {
-            mainPanel.Init(panelModel);
-        }
+        [SerializeField] private MainPanelView mainPanelView;
 
         public void LockedPanel(bool status)
         {
-            mainPanel.Locked(!status);
+            mainPanelView.Locked(!status);
         }
     }
 }

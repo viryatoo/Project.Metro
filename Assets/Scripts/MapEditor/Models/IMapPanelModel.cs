@@ -6,5 +6,6 @@ namespace MapEditor
         public void LineBlockClicked();
         public void StationBlockClicked();
         public void SaveMap(string name);
+        public BlockType GetSelectedBlock();
     }
 }

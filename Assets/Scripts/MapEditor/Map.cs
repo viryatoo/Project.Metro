@@ -20,11 +20,11 @@ namespace MapEditor
         private BlockView[,] view;
         private ISaveSevice SaveLoader;
         private MapBorderView mapBorderView;
-        public Map(ISaveSevice service,MapEditorContentProvider contentProvider,MapBorderView mapBorder)
+        public Map(ISaveSevice service,MapEditorContentProvider contentProvider,ContentLoader contentLoader)
         {
             SaveLoader = service;
             saveDirectory = contentProvider.GetDirectorySaves();
-            mapBorderView = mapBorder;
+            mapBorderView = contentLoader.LoadBorder();
 
         }
 

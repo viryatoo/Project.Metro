@@ -6,9 +6,9 @@ namespace MapEditor
     //связующий класс между маделью какой блок выбрали и фабрикой.
     public class BlockProvider
     {
-        private MainPanelModel modelPanel;
+        private IMapPanelModel modelPanel;
         private BlockFactory factory;
-        public BlockProvider(MainPanelModel model,BlockFactory fact)
+        public BlockProvider(IMapPanelModel model,BlockFactory fact)
         { 
             modelPanel = model;
             factory = fact;

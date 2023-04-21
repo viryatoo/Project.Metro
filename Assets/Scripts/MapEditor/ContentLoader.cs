@@ -6,23 +6,33 @@ using System.Text;
 using System.Threading.Tasks;
 using VContainer;
 using VContainer.Unity;
+using UnityEngine;
 
 namespace MapEditor
 {
-    //пока что нигде не используется.
     public class ContentLoader
     {
         IObjectResolver container;
+        LifetimeScope scope;
         MapEditorContentProvider contentProvider;
-        public ContentLoader(IObjectResolver diContainer,MapEditorContentProvider provider)
+        public ContentLoader(LifetimeScope curentScope, IObjectResolver cont, MapEditorContentProvider provider)
         {
-            container = diContainer;
+            scope = curentScope;
+            container = cont;
             contentProvider = provider;
         }
 
-        public void LoadUI()
+        public UiEditor LoadUI()
         {
-            UiEditor ui = container.Instantiate(contentProvider.uiEditor);
+            UiEditor ui = UnityEngine.Object.Instantiate(contentProvider.uiEditor);
+            container.InjectGameObject(ui.gameObject);
+            //var instantScope = scope.CreateChild(builder => { builder.RegisterComponent(ui); });
+            //return instantScope.Container;
+            return ui;
+        }
+        public MapBorderView LoadBorder()
+        {
+            return container.Instantiate(contentProvider.borderView);
         }
     }
 }

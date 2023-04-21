@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 namespace MapEditor
 {
     //вьюшка боковой панели. отвечает ТОЛЬКО за ОТОБРАЖЕНИЕ и ПЕРЕДАЧИ команд\действий модели
@@ -15,7 +16,8 @@ namespace MapEditor
         [SerializeField] private Button SaveMap;
         [SerializeField] private InputField mapSaverName;
 
-        public void Init(IMapPanelModel model)
+        [Inject]
+        public void Construct(IMapPanelModel model)
         {
             uimodel = model;
             StationBlock.onClick.AddListener(StationBlockClicked);

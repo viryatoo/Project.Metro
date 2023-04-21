@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VContainer;
 using VContainer.Unity;
 using MapEditor.EditorStates;
+using MapEditor;
 
 namespace MapEditor
 {
@@ -15,20 +16,25 @@ namespace MapEditor
         private StateMachine EditorStateMachine;
         private Map gameMap;
         private CameraMovement cameraMovement;
+        private ContentLoader contentLoader; 
+        private BlockProvider provider;
 
-        public EditorLoop(StateMachine sm, Map map,CameraMovement cm,
-            PanelBlockSelected selectedState, WaitPlayerInputState inputState)
+        public EditorLoop(StateMachine sm, Map map, CameraMovement cm, ContentLoader loader, BlockProvider blockProvider)
         {
             EditorStateMachine = sm;
-            gameMap = map;
-            EditorStateMachine.AddState<PanelBlockSelected>(selectedState);
-            EditorStateMachine.AddState<WaitPlayerInputState>(inputState);
-            EditorStateMachine.ChangeState<WaitPlayerInputState>();
             cameraMovement = cm;
+            contentLoader = loader;
+            gameMap = map;
+            provider = blockProvider;
         }
 
         public void Start()
         {
+            var uiEditor = contentLoader.LoadUI();
+            EditorStateMachine.AddState<PanelBlockSelected>(new PanelBlockSelected(provider,uiEditor,gameMap));
+            EditorStateMachine.AddState<WaitPlayerInputState>(new WaitPlayerInputState(gameMap));
+            EditorStateMachine.ChangeState<WaitPlayerInputState>();
+
             gameMap.CreateMap(32);
             cameraMovement.UpdateArea();
         }
