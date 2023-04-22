@@ -18,11 +18,22 @@ public class JsonSL : ISaveSevice
         string file = File.ReadAllText(path);
         JSONObject json = new JSONObject(file);
         BlockData[,] bd;
-        bd = new BlockData[32,32];
-        foreach(var jdata in json)
+        bd = new BlockData[32, 32];
+        for (int i = 0; i < 32; i++)
+        {
+            for (int j = 0; j < 32; j++)
+            {
+                BlockData bdd = new BlockData();
+                bdd.positon = new Positon(i, j);
+                bdd.type = BlockType.Noone;
+                bdd.variant = 0;
+                bd[i, j] = bdd;
+            }
+        }
+        foreach (var jdata in json)
         {
             BlockData data = jsonToData(jdata);
-            bd[data.positon.x,data.positon.y] = data;
+            bd[data.positon.x, data.positon.y] = data;
         }
         return bd;
     }
@@ -40,15 +51,15 @@ public class JsonSL : ISaveSevice
             }
             id++;
         }
-        if(!Directory.Exists(directory))
+        if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
-        File.WriteAllText(directory+name, json.ToString(true));
+        File.WriteAllText(directory + name, json.ToString(true));
     }
 
     private BlockData[] ToArray(BlockData[,] data)
-    { 
+    {
         List<BlockData> list = new List<BlockData>();
         foreach (var item in data)
         {
@@ -72,7 +83,7 @@ public class JsonSL : ISaveSevice
         return jSONObject;
     }
 
-    private BlockData jsonToData(JSONObject json) 
+    private BlockData jsonToData(JSONObject json)
     {
         BlockData data = new BlockData();
         data.positon.x = json[BlockPositionName]["X"].intValue;
@@ -81,5 +92,5 @@ public class JsonSL : ISaveSevice
         data.variant = json[BlockVariantName].intValue;
         return data;
     }
-        
+
 }

@@ -26,6 +26,7 @@ namespace MapEditor
         public void UpdateArea()
         {
             gameArea = new Rect(0, 0, map.Size, map.Size);
+            CalculateBounds();
         }
 
         public void UpdateCamera()

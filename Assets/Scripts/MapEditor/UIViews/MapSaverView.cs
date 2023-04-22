@@ -10,16 +10,32 @@ using VContainer;
 namespace MapEditor
 {
     //вьюшка панели сохранения. Не дописана.
-    public class MapSaverView: MonoBehaviour
+    public class MapSaverView : MonoBehaviour
     {
-        [SerializeField] Dropdown dropdown;
-
-        public MapSaverModel uiModel;
+        [SerializeField] private Dropdown dropdown;
+        [SerializeField] private Button buttonLoadSave;
+        [SerializeField] private Button buttonReimportSaves;
+        private IMapSaverModel uiModel;
 
         [Inject]
-        public void Init(MapSaverModel saverModel)
+        public void Construct(IMapSaverModel saverModel)
         {
             uiModel = saverModel;
+            buttonReimportSaves.onClick.AddListener(BtnReimportSaveHandler);
+            buttonLoadSave.onClick.AddListener(BtnLoadSaveHandler);
+            dropdown.ClearOptions();
+            dropdown.AddOptions(uiModel.GetAllSaveFilesForView());
+        }
+
+
+        private void BtnLoadSaveHandler()
+        {
+            uiModel.LoadSave(dropdown.options[dropdown.value]);
+        }
+        private void BtnReimportSaveHandler()
+        {
+            dropdown.ClearOptions();
+            dropdown.AddOptions(uiModel.GetAllSaveFilesForView());
         }
 
     }

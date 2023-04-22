@@ -19,6 +19,7 @@ namespace MapEditor
             builder.Register<StateMachine>(Lifetime.Singleton);
             builder.Register<BlockFactory>(Lifetime.Singleton);
             builder.Register<IMapPanelModel,MainPanelModel>(Lifetime.Singleton);
+            builder.Register<IMapSaverModel,MapSaverModel>(Lifetime.Singleton);
             builder.Register<BlockProvider>(Lifetime.Singleton);
             builder.Register<Map>(Lifetime.Singleton);
             builder.Register<CameraMovement>(Lifetime.Singleton);

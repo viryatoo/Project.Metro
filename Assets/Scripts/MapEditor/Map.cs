@@ -20,12 +20,13 @@ namespace MapEditor
         private BlockView[,] view;
         private ISaveSevice SaveLoader;
         private MapBorderView mapBorderView;
-        public Map(ISaveSevice service,MapEditorContentProvider contentProvider,ContentLoader contentLoader)
+        private ContentLoader loader;
+        public Map(ISaveSevice service, MapEditorContentProvider contentProvider, ContentLoader contentLoader)
         {
             SaveLoader = service;
+            loader = contentLoader;
             saveDirectory = contentProvider.GetDirectorySaves();
             mapBorderView = contentLoader.LoadBorder();
-
         }
 
         public bool SetBlock(BlockData b, BlockView bv)
@@ -34,7 +35,6 @@ namespace MapEditor
             {
                 if (!HasBlock(b.positon.x, b.positon.y))
                 {
-                    Logger.Log("State: Block Selected", $"Block Set in pos:({b.positon.x},{b.positon.y})");
                     blockData[b.positon.x, b.positon.y] = b;
                     view[b.positon.x, b.positon.y] = bv;
                     CalculateNeighbors(b.positon.x, b.positon.y);
@@ -79,7 +79,7 @@ namespace MapEditor
         {
             if (InSize(posX, posY))
             {
-                return blockData[posX, posY].type != BlockType.Noone;
+                return blockData[posX, posY].type != BlockType.Noone && view[posX, posY] != null;
             }
             return false;
 
@@ -87,8 +87,46 @@ namespace MapEditor
 
         public void SaveMap(string name)
         {
-            SaveLoader.Save(blockData,saveDirectory,name);
+            SaveLoader.Save(blockData, saveDirectory, name);
         }
+
+        public void LoadMap(string name)
+        {
+            ClearMap();
+            CreateMap(32);
+            BlockData[,] data = SaveLoader.Load(saveDirectory + name);
+            blockData = data;
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    if (blockData[i, j].type != BlockType.Noone)
+                    {
+                        view[i, j] = loader.GameBlockFactory.InPosition(new Vector3(i, j, 0)).Create(blockData[i, j].type);
+                        CalculateNeighbors(i, j);
+                    }
+                }
+            }
+        }
+
+        public void ClearMap()
+        {
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    if (HasBlock(i, j))
+                    {
+                        UnityEngine.Object.Destroy(view[i, j].gameObject);
+                    }
+
+
+                }
+            }
+            blockData = new BlockData[0, 0];
+            Size = 0;
+        }
+
 
         private bool InSize(int x, int y)
         {

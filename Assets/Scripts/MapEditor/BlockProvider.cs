@@ -16,7 +16,7 @@ namespace MapEditor
         //просим фабрику выдать нам блок на который кликнул игрок
         public BlockView GetView()
         {
-            return factory.Get(modelPanel.GetSelectedBlock());
+            return factory.Create(modelPanel.GetSelectedBlock());
         }
         //аналогично с датой для блока.
         public BlockData GetData()

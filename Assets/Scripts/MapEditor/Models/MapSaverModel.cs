@@ -7,7 +7,7 @@ using System.Linq;
 namespace MapEditor
 {
     //логика загрузки сейвов. До конца не доделал.
-    public class MapSaverModel
+    public class MapSaverModel : IMapSaverModel
     {
         private Map gameMap;
         private string savesDirectory;
@@ -15,20 +15,25 @@ namespace MapEditor
         {
             gameMap = map;
             savesDirectory = contentProvider.GetDirectorySaves();
+
         }
 
         public List<Dropdown.OptionData> GetAllSaveFilesForView()
         {
-            string[] Directoryfiles = Directory.GetFiles(savesDirectory, ".json");
-            string[] filesName = Directoryfiles.Where(file => { file = file.Replace(savesDirectory, ""); return true; }).ToArray();
-
+            string[] Directoryfiles = Directory.GetFiles(savesDirectory, "*.json");
             List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
 
-            foreach (string file in filesName)
+            foreach (var name in Directoryfiles)
             {
-                options.Add(new Dropdown.OptionData(file));
+                string nameData = name.Replace(savesDirectory, "");
+                options.Add(new Dropdown.OptionData(nameData));
             }
             return options;
+        }
+
+        public void LoadSave(Dropdown.OptionData data)
+        {
+            gameMap.LoadMap(data.text);
         }
     }
 }

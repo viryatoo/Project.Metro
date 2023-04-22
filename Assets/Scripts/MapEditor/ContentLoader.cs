@@ -12,14 +12,17 @@ namespace MapEditor
 {
     public class ContentLoader
     {
-        IObjectResolver container;
-        LifetimeScope scope;
-        MapEditorContentProvider contentProvider;
-        public ContentLoader(LifetimeScope curentScope, IObjectResolver cont, MapEditorContentProvider provider)
+        private IObjectResolver container;
+        private LifetimeScope scope;
+        private MapEditorContentProvider contentProvider;
+
+        public BlockFactory GameBlockFactory { get; private set; }
+        public ContentLoader(LifetimeScope curentScope, IObjectResolver cont, MapEditorContentProvider provider, BlockFactory Bf)
         {
             scope = curentScope;
             container = cont;
             contentProvider = provider;
+            GameBlockFactory = Bf;
         }
 
         public UiEditor LoadUI()
