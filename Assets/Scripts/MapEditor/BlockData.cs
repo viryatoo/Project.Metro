@@ -8,6 +8,7 @@ namespace MapEditor
         public Positon positon;
         public BlockType type;
         public int variant;
+        
     };
     public struct Positon
     {
