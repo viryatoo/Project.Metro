@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapEditor.EditorStates
+namespace CustomStateMachine
 {
     /*
     Реализация машины состояний.

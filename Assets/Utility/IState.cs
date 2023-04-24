@@ -1,4 +1,4 @@
-﻿namespace MapEditor.EditorStates
+﻿namespace CustomStateMachine
 {
     public interface IState
     {
