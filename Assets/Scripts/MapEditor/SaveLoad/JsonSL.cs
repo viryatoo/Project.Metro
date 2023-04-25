@@ -12,16 +12,28 @@ public class JsonSL : ISaveSevice
     private const string BlockPositionName = "P";
     private const string BlockTypeName = "BT";
     private const string BlockVariantName = "V";
+    private const string MapSize = "Size";
+    private const string EditorVersion = "Editor version";
+    private const string MapData = "MapData";
+    private string MapEditorVersion;
 
-    public BlockData[,] Load(string path)
+    public GeometryMap Load(string path)
     {
+
+        GeometryMap geometryMap = new GeometryMap();
+        BlockData[,] bd;
+
         string file = File.ReadAllText(path);
         JSONObject json = new JSONObject(file);
-        BlockData[,] bd;
-        bd = new BlockData[32, 32];
-        for (int i = 0; i < 32; i++)
+
+
+        int size = json[MapSize].intValue;
+
+
+        bd = new BlockData[size, size];
+        for (int i = 0; i < size; i++)
         {
-            for (int j = 0; j < 32; j++)
+            for (int j = 0; j < size; j++)
             {
                 BlockData bdd = new BlockData();
                 bdd.positon = new Positon(i, j);
@@ -30,15 +42,23 @@ public class JsonSL : ISaveSevice
                 bd[i, j] = bdd;
             }
         }
-        foreach (var jdata in json)
+
+        JSONObject mapData = json[MapData];
+
+
+        foreach (var jdata in mapData)
         {
             BlockData data = jsonToData(jdata);
             bd[data.positon.x, data.positon.y] = data;
         }
-        return bd;
+        geometryMap.MapEditorVersion = "ALPHA";
+        geometryMap.MapSize = size;
+        geometryMap.blocks = bd;
+
+        return geometryMap;
     }
 
-    public void Save(BlockData[,] data, string directory, string name)
+    public void Save(BlockData[,] data, string directory, string name,int size)
     {
         int id = 0;
         JSONObject json = new JSONObject();
@@ -55,7 +75,14 @@ public class JsonSL : ISaveSevice
         {
             Directory.CreateDirectory(directory);
         }
-        File.WriteAllText(directory + name, json.ToString(true));
+
+        JSONObject geometryMap = new JSONObject();
+
+        geometryMap.AddField(MapSize, size);
+        geometryMap.AddField(EditorVersion, "ALPHA");
+        geometryMap.AddField(MapData,json);
+
+        File.WriteAllText(directory + name, geometryMap.ToString(true));
     }
 
     private BlockData[] ToArray(BlockData[,] data)

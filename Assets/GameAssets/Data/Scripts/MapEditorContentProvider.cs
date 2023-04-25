@@ -12,6 +12,7 @@ namespace MapEditor
         public BlockFactoryData blockFactoryData;
         public UiEditor uiEditor;
         public MapBorderView borderView;
+        public int DefaultMapSize = 64;
         public string GetDirectorySaves()
         {
            return Application.dataPath + SaveFolder;

@@ -19,4 +19,11 @@ namespace MapEditor
             x = xx; y=yy;
         }
     }
+
+    public struct GeometryMap
+    {
+        public BlockData[,] blocks;
+        public int MapSize;
+        public string MapEditorVersion;
+    }
 }
