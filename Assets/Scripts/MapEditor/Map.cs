@@ -87,15 +87,16 @@ namespace MapEditor
 
         public void SaveMap(string name)
         {
-            SaveLoader.Save(blockData, saveDirectory, name);
+            SaveLoader.Save(blockData, saveDirectory, name,Size);
         }
 
         public void LoadMap(string name)
         {
+            GeometryMap geometryMap = SaveLoader.Load(saveDirectory + name);
             ClearMap();
-            CreateMap(32);
-            BlockData[,] data = SaveLoader.Load(saveDirectory + name);
-            blockData = data;
+            CreateMap(geometryMap.MapSize);
+            
+            blockData = geometryMap.blocks;
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)

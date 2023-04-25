@@ -19,14 +19,16 @@ namespace MapEditor
         private CameraMovement cameraMovement;
         private ContentLoader contentLoader; 
         private BlockProvider provider;
+        private MapEditorContentProvider contentProvider;
 
-        public EditorLoop(StateMachine sm, Map map, CameraMovement cm, ContentLoader loader, BlockProvider blockProvider)
+        public EditorLoop(StateMachine sm, Map map, CameraMovement cm, ContentLoader loader, BlockProvider blockProvider,MapEditorContentProvider settings)
         {
             EditorStateMachine = sm;
             cameraMovement = cm;
             contentLoader = loader;
             gameMap = map;
             provider = blockProvider;
+            contentProvider = settings;
         }
 
         public void Start()
@@ -36,7 +38,7 @@ namespace MapEditor
             EditorStateMachine.AddState<WaitPlayerInputState>(new WaitPlayerInputState(gameMap));
             EditorStateMachine.ChangeState<WaitPlayerInputState>();
 
-            gameMap.CreateMap(32);
+            gameMap.CreateMap(contentProvider.DefaultMapSize);
             cameraMovement.UpdateArea();
         }
 
