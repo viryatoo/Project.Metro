@@ -39,7 +39,7 @@ namespace MapEditor
             EditorStateMachine.ChangeState<WaitPlayerInputState>();
 
             gameMap.CreateMap(contentProvider.DefaultMapSize);
-            cameraMovement.UpdateArea();
+            cameraMovement.UpdateArea(gameMap.Size);
         }
 
         public void Tick()

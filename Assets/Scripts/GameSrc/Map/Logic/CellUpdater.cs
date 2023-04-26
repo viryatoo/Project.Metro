@@ -5,7 +5,7 @@ namespace Game
     public class CellUpdater
     {
         public List<Cell> cells;
-
+        private CellPool pool;
         public CellUpdater()
         {
             cells = new List<Cell>();
@@ -15,7 +15,7 @@ namespace Game
         {
             cells.Add(cell);
         }
-        public void RemoveCell(Cell cell) 
+        public void RemoveCell(Cell cell)
         {
             cells.Remove(cell);
         }
@@ -24,8 +24,18 @@ namespace Game
         {
             foreach (Cell cell in cells)
             {
-                
+
             }
+        }
+
+        public CellPool CreatePool()
+        {
+            if (pool == null)
+            {
+                pool = new CellPool(cells);
+                return pool;
+            }
+            return pool;
         }
     }
 }

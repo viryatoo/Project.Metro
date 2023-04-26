@@ -1,3 +1,4 @@
+using MapEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using VContainer;
 
 namespace Game
 {
-    public class CellView : MonoBehaviour, IPointerClickHandler
+    public class CellView : BlockView, IPointerClickHandler
     {
         private SpriteRenderer spriteRenderer;
 

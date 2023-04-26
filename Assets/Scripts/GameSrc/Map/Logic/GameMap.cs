@@ -10,6 +10,12 @@ namespace Game
         public GameMap(Map gmap, CellUpdater updater)
         {
             geometryMap = gmap;
+            cellUpdater = updater;
+        }
+
+        public int Size()
+        {
+            return geometryMap.Size;
         }
     }
 }
