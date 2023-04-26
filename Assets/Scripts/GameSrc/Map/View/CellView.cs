@@ -9,13 +9,6 @@ namespace Game
 {
     public class CellView : BlockView, IPointerClickHandler
     {
-        private SpriteRenderer spriteRenderer;
-
-        [Inject]
-        public void Construct(Cell cellModel)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
 
         public void OnPointerClick(PointerEventData eventData)
         {

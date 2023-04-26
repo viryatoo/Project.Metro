@@ -22,6 +22,7 @@ namespace MapEditor
         private MapBorderView mapBorderView;
         private ContentLoader loader;
         private IMapWrapperLoader wrapperLoader;
+        private Transform parent;
         public Map(ISaveSevice service, MapEditorContentProvider contentProvider, ContentLoader contentLoader)
         {
             SaveLoader = service;
@@ -39,6 +40,7 @@ namespace MapEditor
                     blockData[b.positon.x, b.positon.y] = b;
                     view[b.positon.x, b.positon.y] = bv;
                     CalculateNeighbors(b.positon.x, b.positon.y);
+                    bv.transform.SetParent(parent);
                     MapUpdated?.Invoke(blockData);
                     return true;
                 }
@@ -78,7 +80,7 @@ namespace MapEditor
             {
                 mapBorderView.GenerateBorder(size);
             }
-
+            parent = new GameObject().transform;
         }
         public bool HasBlock(int posX, int posY)
         {
@@ -110,11 +112,13 @@ namespace MapEditor
                     if (blockData[i, j].type != BlockType.Noone)
                     {
                         view[i, j] = loader.GameBlockFactory.InPosition(new Vector3(i, j, 0)).Create(blockData[i, j].type);
+                        view[i, j].transform.SetParent(parent);
                         CalculateNeighbors(i, j);
                         wrapperLoader?.UpdateCreatedBlock(view[i, j], blockData[i, j]);
                     }
                 }
             }
+            parent.name = "Level: " + name;
             wrapperLoader?.EndLoadMap(geometryMap);
         }
 
@@ -134,6 +138,11 @@ namespace MapEditor
             }
             blockData = new BlockData[0, 0];
             Size = 0;
+            if (parent != null)
+            {
+                UnityEngine.Object.Destroy(parent.gameObject);
+            }
+
         }
 
         public void AddWrapperLoader(IMapWrapperLoader wrapper)
