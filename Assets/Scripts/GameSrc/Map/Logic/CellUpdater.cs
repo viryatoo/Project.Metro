@@ -19,7 +19,6 @@ namespace Game
         {
             cells.Remove(cell);
         }
-
         public void Update()
         {
             foreach (Cell cell in cells)
@@ -27,7 +26,6 @@ namespace Game
 
             }
         }
-
         public CellPool CreatePool()
         {
             if (pool == null)

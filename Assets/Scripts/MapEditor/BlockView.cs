@@ -18,7 +18,7 @@ namespace MapEditor
         [SerializeField] private Sprite spriteRotation;
         [SerializeField] private Sprite spriteFreeConntact;
 
-        private SpriteRenderer spriteRenderer;
+        protected SpriteRenderer spriteRenderer;
         public void Init()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
