@@ -21,6 +21,7 @@ namespace MapEditor
         private ISaveSevice SaveLoader;
         private MapBorderView mapBorderView;
         private ContentLoader loader;
+        private IMapWrapperLoader wrapperLoader;
         public Map(ISaveSevice service, MapEditorContentProvider contentProvider, ContentLoader contentLoader)
         {
             SaveLoader = service;
@@ -57,7 +58,7 @@ namespace MapEditor
 
 
         }
-        public void CreateMap(int size)
+        public void CreateMap(int size, bool NeedBorder = true)
         {
             Size = size;
             blockData = new BlockData[size, size];
@@ -73,7 +74,11 @@ namespace MapEditor
                     blockData[i, j] = bd;
                 }
             }
-            mapBorderView.GenerateBorder(size);
+            if (NeedBorder)
+            {
+                mapBorderView.GenerateBorder(size);
+            }
+
         }
         public bool HasBlock(int posX, int posY)
         {
@@ -94,8 +99,9 @@ namespace MapEditor
         {
             GeometryMap geometryMap = SaveLoader.Load(saveDirectory + name);
             ClearMap();
+
+            wrapperLoader?.BeginLoadMap(geometryMap);
             CreateMap(geometryMap.MapSize);
-            
             blockData = geometryMap.blocks;
             for (int i = 0; i < Size; i++)
             {
@@ -105,9 +111,11 @@ namespace MapEditor
                     {
                         view[i, j] = loader.GameBlockFactory.InPosition(new Vector3(i, j, 0)).Create(blockData[i, j].type);
                         CalculateNeighbors(i, j);
+                        wrapperLoader?.UpdateCreatedBlock(view[i, j], blockData[i, j]);
                     }
                 }
             }
+            wrapperLoader?.EndLoadMap(geometryMap);
         }
 
         public void ClearMap()
@@ -126,6 +134,11 @@ namespace MapEditor
             }
             blockData = new BlockData[0, 0];
             Size = 0;
+        }
+
+        public void AddWrapperLoader(IMapWrapperLoader wrapper)
+        {
+            wrapperLoader = wrapper;
         }
 
 

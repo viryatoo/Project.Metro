@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapEditor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace GameAssets
 {
+    [CreateAssetMenu(fileName = "GameMapImportSettings", menuName = "Data/Game/MapImportSettings")]
     public class GameMapImportSettings : ScriptableObject
     {
         [SerializeField] private string FolderWithMaps = "/GameContent/";
@@ -15,5 +17,8 @@ namespace GameAssets
         {
             return Application.dataPath + FolderWithMaps;
         }
+
+        public MapEditorContentProvider mapEditorContentProvider;
+        public string Format = ".json";
     }
 }

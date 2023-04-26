@@ -10,12 +10,14 @@ public class GameMapImporter
     private ISaveSevice saveLoadService;
     private Dictionary<string, string> findedMaps;
     private GameMapImportSettings importSettings;
+    private ContentLoader contentLoader;
 
-    public GameMapImporter(ISaveSevice saveSevice,GameMapImportSettings settings)
+    public GameMapImporter(ISaveSevice saveSevice,GameMapImportSettings settings,ContentLoader loader)
     {
         saveLoadService = saveSevice;
         findedMaps = new Dictionary<string, string>();
         importSettings = settings;
+        contentLoader = loader;
     }
     public void UpdateMapDirecory()
     {
@@ -29,14 +31,15 @@ public class GameMapImporter
             findedMaps[nameData] = name;
         }
     }
-    /*
      
     public GameMap Import(string name)
     {
         CellUpdater updater = new CellUpdater();
-        Map geometryMap = new Map();
-    }
+        CellPool pool = updater.CreatePool();
+        Map geometryMap = new Map(saveLoadService,importSettings.mapEditorContentProvider,contentLoader);
+        geometryMap.AddWrapperLoader(new WrapperMapLoader(updater, pool));
+        geometryMap.LoadMap(name+importSettings.Format);
 
-     
-     */
+        return new GameMap(geometryMap, updater);
+    }
 }

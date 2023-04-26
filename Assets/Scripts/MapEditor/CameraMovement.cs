@@ -13,19 +13,18 @@ namespace MapEditor
         private Rect gameArea;//игровая область за которую нельзя выходить.
         private Camera gameCamera;
         private float sensitivity;
-        private Map map;
-        public CameraMovement(MapEditorContentProvider contentProvider,Map gameMap)
+
+        public CameraMovement(MapEditorContentProvider contentProvider)
         {
            
             gameCamera = Camera.main;
             sensitivity = contentProvider.CameraSensivitity;
-            map = gameMap;
             CalculateBounds();
         }
 
-        public void UpdateArea()
+        public void UpdateArea(int size)
         {
-            gameArea = new Rect(0, 0, map.Size, map.Size);
+            gameArea = new Rect(0, 0, size, size);
             CalculateBounds();
         }
 
