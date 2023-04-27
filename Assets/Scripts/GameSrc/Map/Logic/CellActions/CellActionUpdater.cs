@@ -16,16 +16,16 @@ namespace Game
             actions = new List<IAction>(ACTIONS_COPACITY);
         }
         public void AddAction(IAction action, Cell cell)
-        {
-            action.Initialize(cell);
+        { 
             actions.Add(action);
+            action.Start();
         }
 
         public void Update()
         {
             foreach (var action in actions)
             {
-                if (action.Update() > 100f)
+                if (action.Update() >= 100f)
                 {
                     action.End();
                     actions.Remove(action);

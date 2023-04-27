@@ -60,6 +60,12 @@ namespace MapEditor
 
 
         }
+
+        public BlockType GetBlockTypeInPosition(int posX, int posY)
+        {
+            return blockData[posX, posY].type;
+        }
+
         public void CreateMap(int size, bool NeedBorder = true)
         {
             Size = size;

@@ -9,7 +9,7 @@ using Game;
 namespace GameAssets
 {
     [CreateAssetMenu(fileName = "GameContentProvider", menuName = "Data/Game/ConentProvider")]
-    public class GameContentProvider
+    public class GameContentProvider : ScriptableObject
     {
         public CellFactoryData CellFactoryData;
     }
