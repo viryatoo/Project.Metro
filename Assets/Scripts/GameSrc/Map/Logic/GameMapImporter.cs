@@ -34,12 +34,14 @@ public class GameMapImporter
      
     public GameMap Import(string name)
     {
+        Map geometryMap = new Map(saveLoadService,importSettings.mapEditorContentProvider,contentLoader);
+
         CellUpdater updater = new CellUpdater();
         CellPool pool = updater.ResolvePool();
-        Map geometryMap = new Map(saveLoadService,importSettings.mapEditorContentProvider,contentLoader);
+        CellActionUpdater actionUpdater = new CellActionUpdater();
         geometryMap.AddWrapperLoader(new WrapperMapLoader(updater, pool));
         geometryMap.LoadMap(name+importSettings.Format);
 
-        return new GameMap(geometryMap, updater);
+        return new GameMap(geometryMap, updater,actionUpdater);
     }
 }

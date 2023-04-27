@@ -11,7 +11,6 @@ namespace MapEditor
     //Проверить есть ли блок в какой-либо позиции и методы загрузки\сохранения данных
     public class Map
     {
-        public Action<BlockData[,]> MapUpdated;
         public int Size { get; private set; }
 
         private string saveDirectory;
@@ -41,7 +40,6 @@ namespace MapEditor
                     view[b.positon.x, b.positon.y] = bv;
                     CalculateNeighbors(b.positon.x, b.positon.y);
                     bv.transform.SetParent(parent);
-                    MapUpdated?.Invoke(blockData);
                     return true;
                 }
 

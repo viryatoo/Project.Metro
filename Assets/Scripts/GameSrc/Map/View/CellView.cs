@@ -11,13 +11,16 @@ namespace Game
 {
     public class CellView : BlockView, IPointerClickHandler
     {
-        [SerializeField] private TMP_Text armyText;
 
-        public event Action cellClicked;
+        public event Action OnCellClicked;
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            cellClicked?.Invoke();
+            OnCellClicked?.Invoke();
+        }
+        public virtual void UpdateView(Cell cell)
+        {
+
         }
     }
 }

@@ -13,17 +13,22 @@ namespace Game
         private CellView view;
         private Transform transform;
 
-        public Cell(CellPool cellPool,CellView cellView)
+        public Cell(CellPool cellPool, CellView cellView,int x,int y)
         {
             pool = cellPool;
             view = cellView;
             transform = cellView.transform;
-            
+            cellView.OnCellClicked += OnCliced;
         }
 
         public void OnCliced()
         {
             pool.SetSelectedCell(this);
+        }
+
+        public virtual void UpdateView()
+        {
+            view.UpdateView(this);
         }
     }
 }
