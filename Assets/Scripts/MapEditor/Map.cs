@@ -53,7 +53,6 @@ namespace MapEditor
                 Logger.Log("State: wait input", $"Block remove in pos:({posX},{posY})");
                 blockData[posX, posY].type = BlockType.Noone;
                 UnityEngine.Object.Destroy(view[posX, posY].gameObject);
-                MapUpdated?.Invoke(blockData);
             }
 
 
