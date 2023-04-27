@@ -13,6 +13,7 @@ namespace Game
     public class MapInstaller : IInstaller
     {
         private GameMapImportSettings importSettings;
+
         public MapInstaller(GameMapImportSettings settings)
         {
             importSettings = settings;

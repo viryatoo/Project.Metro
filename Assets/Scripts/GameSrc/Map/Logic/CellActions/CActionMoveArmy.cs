@@ -15,12 +15,16 @@ namespace Game
         private float totalTime;
         private float currentTime;
         private float progress;
+        private int secondStartArmy;
+        private int firstStartArmy;
         public CActionMoveArmy(Cell from, Cell to,float timeInSeconds)
         {
             fromCell = from;
             toCell = to;
             totalTime = timeInSeconds;
             currentTime = 0;
+            secondStartArmy = to.Army;
+            firstStartArmy = from.Army;
         }
         public void End()
         {
@@ -39,11 +43,15 @@ namespace Game
 
         public float Update()
         {
+            Debug.Log(progress);
+            Debug.Log(currentTime);
             currentTime += Time.deltaTime;
             progress = currentTime / totalTime;
-            fromCell.Army -= (int)(fromCell.Army * progress);
-            toCell.Army += (int)(fromCell.Army * progress);
-            return progress;
+            fromCell.Army = (int)(firstStartArmy * (1-progress));
+            toCell.Army = secondStartArmy + (int)(firstStartArmy * progress);
+            fromCell.UpdateView();
+            toCell.UpdateView() ;
+            return progress*100;
         }
     }
 }

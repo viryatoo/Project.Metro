@@ -11,6 +11,7 @@ namespace Game
     public class GameScope: LifetimeScope
     {
         [SerializeField] private GameMapImportSettings gameMapImportSettings;
+        [SerializeField] private GameMainPanelView mainPanelView;
         protected override void Configure(IContainerBuilder builder)
         {
             IInstaller mapInstaller = new MapInstaller(gameMapImportSettings);
@@ -19,6 +20,7 @@ namespace Game
             mapInstaller.Install(builder);
             builder.Register<CameraMovement>(Lifetime.Singleton);
             builder.RegisterEntryPoint<GameLoop>();
+            builder.RegisterComponent(mainPanelView);
         }
     }
 }

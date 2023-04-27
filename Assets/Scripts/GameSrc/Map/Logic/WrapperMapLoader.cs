@@ -11,7 +11,7 @@ namespace Game
     {
         private CellUpdater cellUpdater;
         private CellPool pool;
-        public WrapperMapLoader(CellUpdater updater,CellPool cellPool)
+        public WrapperMapLoader(CellUpdater updater, CellPool cellPool)
         {
             cellUpdater = updater;
             pool = cellPool;
@@ -28,9 +28,10 @@ namespace Game
 
         public void UpdateCreatedBlock(BlockView blockView, BlockData data)
         {
-            Cell cell = new Cell(pool,(CellView)blockView);
-            cell.Army = 0;
+            Cell cell = new Cell(pool, (CellView)blockView,data.positon.x,data.positon.y);
+            cell.Army = UnityEngine.Random.Range(0, 200);
             cell.police = null;
+            cell.UpdateView();
             cellUpdater.AddCell(cell);
         }
     }

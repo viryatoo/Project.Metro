@@ -15,7 +15,7 @@ namespace Game
         {
             actions = new List<IAction>(ACTIONS_COPACITY);
         }
-        public void AddAction(IAction action, Cell cell)
+        public void AddAction(IAction action)
         { 
             actions.Add(action);
             action.Start();
@@ -23,12 +23,14 @@ namespace Game
 
         public void Update()
         {
-            foreach (var action in actions)
+            for (int i =0;i<actions.Count;i++)
             {
-                if (action.Update() >= 100f)
+                if (actions[i].Update() >= 100f)
                 {
-                    action.End();
-                    actions.Remove(action);
+                    
+                    actions[i].End();
+                    actions.Remove(actions[i]);
+                    i--;
                 }
             }
         }
