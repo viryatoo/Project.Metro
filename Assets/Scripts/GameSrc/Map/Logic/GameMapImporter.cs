@@ -35,7 +35,7 @@ public class GameMapImporter
     public GameMap Import(string name)
     {
         CellUpdater updater = new CellUpdater();
-        CellPool pool = updater.CreatePool();
+        CellPool pool = updater.ResolvePool();
         Map geometryMap = new Map(saveLoadService,importSettings.mapEditorContentProvider,contentLoader);
         geometryMap.AddWrapperLoader(new WrapperMapLoader(updater, pool));
         geometryMap.LoadMap(name+importSettings.Format);

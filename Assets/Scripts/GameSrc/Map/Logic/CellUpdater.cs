@@ -26,7 +26,7 @@ namespace Game
 
             }
         }
-        public CellPool CreatePool()
+        public CellPool ResolvePool()
         {
             if (pool == null)
             {

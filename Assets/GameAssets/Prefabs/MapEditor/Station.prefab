@@ -97,3 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b56ea0eaddec847875c912fef364db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NeighborUp: 0
+  NeighborDown: 0
+  NeighborLeft: 0
+  NeighborRight: 0
+  DependencyFromNeighbors: 0
+  spriteVertical: {fileID: 0}
+  spriteHorizontal: {fileID: 0}
+  spriteConstation: {fileID: 0}
+  spriteRotation: {fileID: 0}
+  spriteFreeConntact: {fileID: 0}

@@ -28,10 +28,9 @@ namespace Game
 
         public void UpdateCreatedBlock(BlockView blockView, BlockData data)
         {
-            Cell cell = new Cell(pool);
+            Cell cell = new Cell(pool,(CellView)blockView);
             cell.Army = 0;
             cell.police = null;
-            cell.view = blockView;
             cellUpdater.AddCell(cell);
         }
     }

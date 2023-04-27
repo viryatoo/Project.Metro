@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraSensivitity: 1
   SaveFolder: /GameContent/
-  blockFactoryData: {fileID: 11400000, guid: 0ac851e63c1b0204a9b73f3ad7ce509c, type: 2}
-  uiEditor: {fileID: 4366814584440998289, guid: 453b70c67f3bbcc44a3c483f7623effb, type: 3}
+  blockFactoryData: {fileID: 11400000, guid: 6aec234998d239d46a23acad8c549f97, type: 2}
+  uiEditor: {fileID: 0}
   borderView: {fileID: -1556224911663579746, guid: e3b569b1b37d9c14eb9b0e7a13994d50, type: 3}
+  DefaultMapSize: 64

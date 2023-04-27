@@ -11,6 +11,7 @@ namespace Game
         private List<Cell> allCells;
         private Cell sellectedCell;
 
+        public event Action<Cell> CellClicked;
         public CellPool(List<Cell> cells)
         {
             allCells = cells;
@@ -33,6 +34,7 @@ namespace Game
         public void SetSelectedCell(Cell cell)
         {
             sellectedCell = cell;
+            CellClicked?.Invoke(sellectedCell);
         }
     }
 }

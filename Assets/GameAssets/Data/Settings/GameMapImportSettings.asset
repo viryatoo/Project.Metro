@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameMapImportSettings
   m_EditorClassIdentifier: 
   FolderWithMaps: /GameContent/
-  mapEditorContentProvider: {fileID: 11400000, guid: ed537462f650f044192a48460b9572a0, type: 2}
+  mapEditorContentProvider: {fileID: 11400000, guid: 924a6c10d9444a341a70bb6cbd192b04, type: 2}
   Format: .json

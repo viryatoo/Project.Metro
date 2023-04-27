@@ -8,7 +8,6 @@ namespace Game
 {
     public interface IAction
     {
-        public void Initialize(Cell cell);
         public void Start();
         public float Update();
         public void End();
