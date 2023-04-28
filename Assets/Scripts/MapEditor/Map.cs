@@ -12,9 +12,14 @@ namespace MapEditor
     public class Map
     {
         public int Size { get; private set; }
+        public AStar.PathFinder PathFinder => pathFinder;
+        public AStar.WorldGrid WorldGrid => worldGrid;
 
         private string saveDirectory;
-
+        private AStar.Options.PathFinderOptions pathFinderOptions;
+        private AStar.WorldGrid worldGrid;
+        private AStar.PathFinder pathFinder;
+        private short[,] astarMatrix;
         private BlockData[,] blockData;
         private BlockView[,] view;
         private ISaveSevice SaveLoader;
@@ -28,6 +33,13 @@ namespace MapEditor
             loader = contentLoader;
             saveDirectory = contentProvider.GetDirectorySaves();
             mapBorderView = contentLoader.LoadBorder();
+            pathFinderOptions = new AStar.Options.PathFinderOptions
+            {
+                UseDiagonals = false,
+                PunishChangeDirection = true
+            };
+
+
         }
 
         public bool SetBlock(BlockData b, BlockView bv)
@@ -40,6 +52,8 @@ namespace MapEditor
                     view[b.positon.x, b.positon.y] = bv;
                     CalculateNeighbors(b.positon.x, b.positon.y);
                     bv.transform.SetParent(parent);
+                    astarMatrix[b.positon.x, b.positon.y] = 1;
+                    worldGrid[b.positon.x, b.positon.y] = 1;
                     return true;
                 }
 
@@ -52,7 +66,10 @@ namespace MapEditor
             {
                 Logger.Log("State: wait input", $"Block remove in pos:({posX},{posY})");
                 blockData[posX, posY].type = BlockType.Noone;
+                astarMatrix[posX, posY] = 0;
+                worldGrid[posX, posY] = 0;
                 UnityEngine.Object.Destroy(view[posX, posY].gameObject);
+
             }
 
 
@@ -84,6 +101,7 @@ namespace MapEditor
                 mapBorderView.GenerateBorder(size);
             }
             parent = new GameObject().transform;
+            UpdateAstar();
         }
         public bool HasBlock(int posX, int posY)
         {
@@ -122,7 +140,16 @@ namespace MapEditor
                 }
             }
             parent.name = "Level: " + name;
+
+            UpdateAstar();
             wrapperLoader?.EndLoadMap(geometryMap);
+        }
+
+        public void UpdateAstar()
+        {
+            UpdateAstarMatrix();
+            worldGrid = new AStar.WorldGrid(astarMatrix);
+            pathFinder = new AStar.PathFinder(worldGrid);
         }
 
         public void ClearMap()
@@ -187,6 +214,24 @@ namespace MapEditor
                 view[posX, posY].NeighborUp = true;
                 view[posX, posY + 1].ColculateView();
                 view[posX, posY].ColculateView();
+            }
+        }
+        private void UpdateAstarMatrix()
+        {
+            astarMatrix = new short[Size, Size];
+            for(int i = 0; i < Size; i++) 
+            {
+                for(int j = 0; j < Size; j++)
+                {
+                    if (blockData[i,j].type!=BlockType.Noone)
+                    {
+                        astarMatrix[i, j] = 1;
+                    }
+                    else
+                    {
+                        astarMatrix[i, j] = 0;
+                    }
+                }
             }
         }
 
