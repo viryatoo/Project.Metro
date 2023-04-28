@@ -13,12 +13,14 @@ namespace Game
         private CellView view;
         private Transform transform;
 
-        public Cell(CellPool cellPool, CellView cellView,int x,int y)
+        public Cell(CellPool cellPool, CellView cellView,int xx,int yy)
         {
             pool = cellPool;
             view = cellView;
             transform = cellView.transform;
             cellView.OnCellClicked += OnCliced;
+            x = xx;
+            y = yy;
         }
 
         public void OnCliced()

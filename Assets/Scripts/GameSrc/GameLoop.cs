@@ -27,7 +27,7 @@ namespace Game
         {
             map = mapImporter.Import("Preview2");
             cameraMovement.UpdateArea(map.Size());
-            commandsBuilder = new UICommandsStationBuilder(mainPanel, map.BlockTypeProvider, map.CellActionUpdater,map.Pool);
+            commandsBuilder = new UICommandsStationBuilder(mainPanel, map.BlockTypeProvider, map.CellActionUpdater,map.Pool,map.GameMapUtility);
         }
 
         public void Tick()
